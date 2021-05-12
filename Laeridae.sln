@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laeridae", "Laeridae.csproj", "{E4C05950-3B87-415C-935D-4A5C2BC1FF51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laeridae API", "..\Laeridae API\Laeridae API.csproj", "{5493CAC1-7E30-4FC8-8BCA-5B07A8525D7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4C05950-3B87-415C-935D-4A5C2BC1FF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C05950-3B87-415C-935D-4A5C2BC1FF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C05950-3B87-415C-935D-4A5C2BC1FF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C05950-3B87-415C-935D-4A5C2BC1FF51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5493CAC1-7E30-4FC8-8BCA-5B07A8525D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5493CAC1-7E30-4FC8-8BCA-5B07A8525D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5493CAC1-7E30-4FC8-8BCA-5B07A8525D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5493CAC1-7E30-4FC8-8BCA-5B07A8525D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {597F6F1C-9E4F-4446-975E-FBA4185DCA65}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Teachers Index";
+}
+
+<h2>View Teachers</h2>
+<table class="table_dark" id="teachers_table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-sm-4">
+        <a href="@Url.Action("Create", "Teachers")" class="btn btn-primary" type="button" onclick="addTeacher()">Add Teacher</a>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(document).ready(function () {
+        $('#teachers_table').DataTable({
+            "destroy": true,
+            "processing": true,          
+            "ajax": {
+                "method": "GET",
+                "url": "https://localhost:44380/api/Teachers/TeachersList",
+                dataSrc: '',
+                "order": [[0, "asc"]]
+            },
+            "columns": [{
+                "data": "Id"
+            }, {
+                "data": "Name"
+            }, {
+                "data": "Date"
+            }, {
+            "data": "Id",
+            "render": function (data, type, full) {
+                return '<a href="#" type="button" class="btn btn-primary float-left" onclick=deleteTeacher(' + full.Id + ')>Delete</a>' +
+                    '<a href="#" type="button" class="btn btn-secondary" onclick=editTeacher(' + full.Id + ')>Edit</a>';
+            }
+            }]
+        });
+    });
+
+    function deleteTeacher(id) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'https://localhost:44380/api/Teachers/DeleteTeacher/' + id,
+            beforeSend: function () {
+                return confirm("Are you sure you want to delete this Teacher?");
+            },
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+
+    function editTeacher(id) {
+        localStorage.setItem("teacherId", id);
+        window.location = "/Teachers/Edit/"; 
+    }
+</script>
+
