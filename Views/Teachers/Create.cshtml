@@ -25,9 +25,15 @@
                     <input type="date" class="form-control" id="Date" name="Date" placeholder="">
                 </div>
             </div>
+            <div class="form-group-row">
+                <label for="Active" class="col-sm col-fom-label">Active</label>
+                <div class="col-sm-6">
+                    <input type="checkbox" class="form-control" id="Active">
+                </div>
+            </div>
             <div class="form-group row">
                 <button class="btn btn-primary" type="button" id="addTeacher" name="addTeacher" onclick="createTeacher()">Save</button>
-                <a href="@Url.Action("Index", "Teachers")" class="btn btn-primary" type="button" onclick="addTeacher()">Add Teacher</a>
+                <a href="@Url.Action("Index", "Teachers")" class="btn btn-primary" type="button" onclick="addTeacher()">View Teachers</a>
             </div>
         </form>
     </div>
@@ -37,23 +43,23 @@
     function createTeacher() {
         var name = $('#Name').val();
         var date = $('#Date').val()
+        var active = 0;
 
-        bonobo = {
-            Id: 1,
-            Name: "bonobo",
-            Date: "2021-12-05"
+        if (document.querySelector('#Active:checked') !== null) {
+            active = 1;
+        } 
+
+        teacher = {
+            Name: name,
+            Date: date, 
+            Active: active
         }
 
         $.ajax({
             type: 'POST',
             url: 'https://localhost:44380/api/Teachers/CreateTeacher',
-            //met niks
-            //dataType: 'json',
-            //contenttype: 'application/json; charset=utf-8',
-            //contentType: "application/x-www-form-urlencoded",
             dataType: 'application/json',
-            //data:JSON.stringify(bonobo),
-            data: bonobo,
+            data: teacher,
             success: function () {
                 alert("Great Success");
             }

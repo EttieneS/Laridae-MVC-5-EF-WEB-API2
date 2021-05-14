@@ -24,8 +24,15 @@
                 <input type="date" class="form-control" id="Date" name="Date" placeholder="">
             </div>
         </div>
+        <div class="form-group-row">
+            <label for="Active" class="col-sm col-fom-label">Active</label>
+            <div class="col-sm-6">
+                <input type="checkbox" class="form-control" id="Active">
+            </div>
+        </div>
         <div class="form-group row">
-            <button class="btn btn-primary" type="submit" id="edit" name="edit">Save</button>
+            <button class="btn btn-primary" type="button" id="edit" name="edit" onclick="editTeacher()">Save</button>
+            <a href="@Url.Action("Index", "Teachers")" class="btn btn-primary" type="button" onclick="addTeacher()">View Teachers</a>
         </div>
     </form>
 </div>
@@ -42,36 +49,39 @@
             success: function (teacher) {
                 $('#Id').val(teacher.Id);
                 $('#Name').val(teacher.Name);
+                $('#Date').val(teacher.Date);
 
-                var date = teacher.date;
-                var unix = moment(date, "YYYY/MM/DD", true).format();
-                $('#Date').text(unix);
+                if (teacher.Active == 1) {
+                    document.getElementById("Active").checked = true;
+                }
             }
         });
     });
 
     function editTeacher() {
-        var date = $('#Date').val();
-        var ts = moment(date, "YYYY/MM/DD").valueOf();
-
         var Id = $('#Id').val();
         var Name = $('#Name').val();
+        var Date = $('#Date').val();
+        var Active = 0;
+
+        if (document.getElementById("Active").checked == true) {
+            Active = 1;
+        }
+
+        var teacher = {
+            Id: Id,
+            Name: Name,
+            Date: Date,
+            Active: Active
+        }
 
         $.ajax({
             type: 'PUT',
-            url: 'https://localhost:44380/api/Teachers/EditTeacher/',
-            crossDomain: true,
-            headers: {
-                "Access-Control-Allow-Cross-Origin": "*"
-            },
-            contentType: "application/json; charset=utf-8",
+            url: 'https://localhost:44380/api/Teachers/EditTeacher',
             dataType: "json",
-            data: {
-                'Id': Id,
-                'Name': Name
-            },
+            data: teacher,
             success: function () {
-                alert("Great Success");
+                alert("Updated Successfully");
             }
         });
     }
