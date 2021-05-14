@@ -2,18 +2,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    ViewBag.Title = "Teachers Index";
+    ViewBag.Title = "All Students";
 }
 
 <h2>View Teachers</h2>
-<table class="table_dark" id="teachers_table">
+<table class="table_dark" id="studnets_table">
     <thead>
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Date</th>
-            <th scope="col">Active</th>
-            <th scope="col">Salary</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -22,7 +19,7 @@
 </table>
 <div class="row">
     <div class="col-sm-4">
-        <a href="@Url.Action("Create", "Teachers")" class="btn btn-primary" type="button" onclick="addTeacher()">Add Teacher</a>
+        <a href="@Url.Action("Create", "Students")" class="btn btn-primary" type="button" onclick="addStudent()">Add Student</a>
     </div>
 </div>
 
@@ -30,12 +27,12 @@
 @Scripts.Render("~/bundles/bootstrap")
 <script>
     $(document).ready(function () {
-        $('#teachers_table').DataTable({
+        $('#students_table').DataTable({
             "destroy": true,
-            "processing": true,          
+            "processing": true,
             "ajax": {
                 "method": "GET",
-                "url": "https://localhost:44380/api/Teachers/TeachersList",
+                "url": "https://localhost:44380/api/Teachers/StudentsList",
                 dataSrc: '',
                 "order": [[0, "asc"]]
             },
@@ -44,19 +41,6 @@
             }, {
                 "data": "Name"
             }, {
-                "data": "Date"
-            }, {
-                "data": "Active",
-                "render": function (data, type, full) {
-                        if (full.Active == 1) {
-                            return "Active"
-                        } else {
-                            return "Inactive"
-                        }
-                }
-                }, {
-                    "data": "Salary"
-                },{
             "data": "Id",
             "render": function (data, type, full) {
                 return '<a href="#" type="button" class="btn btn-primary float-left" onclick=deleteTeacher(' + full.Id + ')>Delete</a>' +
@@ -81,7 +65,8 @@
 
     function editTeacher(id) {
         localStorage.setItem("teacherId", id);
-        window.location = "/Teachers/Edit/"; 
+        window.location = "/Teachers/Edit/";
     }
 </script>
+
 

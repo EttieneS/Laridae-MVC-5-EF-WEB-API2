@@ -12,8 +12,8 @@
 <div class="card card-report mx-auto">
     <!--<div class="card-body">-->
     <form action="https://localhost:44380/api/Teachers/EditTeacher" method="post" typeof="application/json">
+        <input type="hidden" id="Id" name="Id" />
         <div class="form-group row">
-            <input type="hidden" id="Id" name="Id" />
             <label for="Name" class="col-sm col-fom-label">Teacher Name</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="Name" name="Name" placeholder="Teacher Name">
@@ -22,6 +22,12 @@
         <div class="form-group-row">
             <div class="col-sm-6">
                 <input type="date" class="form-control" id="Date" name="Date" placeholder="">
+            </div>
+        </div>
+        <div class="form-group-row">
+            <label for="Salary" class="col-sm col-fom-label">Salary</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control" id="Salary" name="Salary" placeholder="0.00">
             </div>
         </div>
         <div class="form-group-row">
@@ -50,6 +56,7 @@
                 $('#Id').val(teacher.Id);
                 $('#Name').val(teacher.Name);
                 $('#Date').val(teacher.Date);
+                $('#Salary').val(teacher.Salary);
 
                 if (teacher.Active == 1) {
                     document.getElementById("Active").checked = true;
@@ -62,6 +69,7 @@
         var Id = $('#Id').val();
         var Name = $('#Name').val();
         var Date = $('#Date').val();
+        var Salary = $('#Salary').val();
         var Active = 0;
 
         if (document.getElementById("Active").checked == true) {
@@ -72,7 +80,8 @@
             Id: Id,
             Name: Name,
             Date: Date,
-            Active: Active
+            Active: Active, 
+            Salary: Salary
         }
 
         $.ajax({
@@ -80,8 +89,10 @@
             url: 'https://localhost:44380/api/Teachers/EditTeacher',
             dataType: "json",
             data: teacher,
-            success: function () {
-                alert("Updated Successfully");
+            success: function (res) {
+                if (res.Success) {
+                    window.location.href = res.RedirectUrl;
+                }
             }
         });
     }
