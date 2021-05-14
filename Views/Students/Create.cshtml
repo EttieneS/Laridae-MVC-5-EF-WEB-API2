@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Create New Student";
+}
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript" src="../../packages/datetimepicker/moment.min.js"></script>
+<h2>Add Teacher</h2>
+
+<div class="card card-report mx-auto">
+    <div class="card-body">
+        <form action="https://localhost:44380/api/Teachers/CreateTeacher" method="POST" type="application/json">
+            <div class="form-group row">
+                <label for="Name" class="col-sm col-fom-label">Teacher Name</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Teacher Name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <button class="btn btn-primary" type="button" id="addStudent" name="addStudent" onclick="createStudent()">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function createStudent() {
+        var name = $('#Name').val();
+        
+        student = {
+            Name: name
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://localhost:44380/api/Students/CreateStudent',
+            dataType: 'application/json',
+            data: student,
+            success: function (response) {
+                if (response.Success) {
+                    window.location.href = response.RedirectUrl;
+                }
+            }
+        });
+    }
+</script>
+
+

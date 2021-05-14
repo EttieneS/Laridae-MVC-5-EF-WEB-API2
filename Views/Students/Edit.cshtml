@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Edit Student";
+}
+
+<link rel="stylesheet" type="text/css" href="../../packages/DataTables/DateTime/css/dataTables.dateTime.min.css">
+<h2>Edit Teacher</h2>
+
+<div class="card card-report mx-auto">
+    <input type="hidden" id="Id" name="Id" />
+    <form action="https://localhost:44380/api/Teachers/EditTeacher" method="post" typeof="application/json">
+        <div class="form-group row">
+            <label for="Name" class="col-sm col-fom-label">Student Name</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="Name" name="Name" placeholder="Student Name">
+            </div>
+        </div>
+        <div class="form-group-row">
+            <div class="col-sm-6">
+                <input type="date" class="form-control" id="Date" name="Date" placeholder="">
+            </div>
+        </div>
+        <div class="form-group row">
+            <button class="btn btn-primary" type="button" id="edit" name="edit" onclick="editStudent()">Save</button>
+        </div>
+    </form>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript" src="../../packages/datetimepicker/moment.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var Id = localStorage.getItem("studentId")
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://localhost:44380/api/Students/GetStudent/' + Id,
+            success: function (student) {
+                $('#Id').val(student.Id);
+                $('#Name').val(student.Name);
+            }
+        });
+    });
+
+    function editStudent() {
+        var Id = $('#Id').val();
+        var Name = $('#Name').val();
+        
+        var student = {
+            Id: Id,
+            Name: Name
+        }
+
+        $.ajax({
+            type: 'PUT',
+            url: 'https://localhost:44380/api/Students/EditStudent',
+            dataType: "json",
+            data: student,
+            success: function (res) {
+                if (res.Success) {
+                    window.location.href = res.RedirectUrl;
+                }
+            }
+        });
+    }
+</script>
+
+
