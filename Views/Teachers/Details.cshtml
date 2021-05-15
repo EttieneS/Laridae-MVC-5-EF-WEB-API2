@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="header">
+    <h3 id="name"></h3>
+    <input type="text" style="display: none" id="teacher_id"/>
+</div>
+<div>
+    <table class="table_dark" id="students_table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <a href="@Url.Action("Create", "Students")" class="btn btn-primary" type="button" onclick="addStudent()">Add Student</a>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(document).ready(function () {
+        var Id = localStorage.getItem("teacherId")
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://localhost:44380/api/Teachers/TeachersList/' + Id,
+            success: function (teacher) {
+                $('#teacher_id').val(teacher.Id);
+                $('#header h3').text(teacher.Name);
+            }
+        });
+    });
+</script>
+

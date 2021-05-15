@@ -7,7 +7,7 @@
 }
 
 <link rel="stylesheet" type="text/css" href="../../packages/DataTables/DateTime/css/dataTables.dateTime.min.css">
-<h2>Edit Teacher</h2>
+<h2>Edit Student</h2>
 
 <div class="card card-report mx-auto">
     <input type="hidden" id="Id" name="Id" />
@@ -24,6 +24,14 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="teacherid" class="col-sm col-form-label">Teacher:</label>
+            <div class="col-sm-6">
+                <select class="browser-default custom-select" id="teacherid" name="teacherid">
+                    <option selected>Select Teacher Name</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
             <button class="btn btn-primary" type="button" id="edit" name="edit" onclick="editStudent()">Save</button>
         </div>
     </form>
@@ -34,6 +42,20 @@
 <script>
     $(document).ready(function () {
         var Id = localStorage.getItem("studentId")
+        
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:44380/api/Teachers/TeachersList/',
+            success: function (response) {
+                $.each(response, function (key, value) {
+                    var teachernamedropdown = $('#teacherid');
+                    var option = document.createElement("option");
+                    option.text = value['Name'];
+                    option.value = value['Id'];
+                    teachernamedropdown.append(option);
+                });
+            }
+        });
 
         $.ajax({
             type: 'POST',
@@ -41,17 +63,23 @@
             success: function (student) {
                 $('#Id').val(student.Id);
                 $('#Name').val(student.Name);
+                $('#Date').val(student.Date);
+                $('#teacherid').val(student.TeacherFK);
             }
-        });
+        });  
     });
 
     function editStudent() {
         var Id = $('#Id').val();
         var Name = $('#Name').val();
-        
+        var date = $('#Date').val();
+        var teacherid = $('teacherid').val();
+
         var student = {
             Id: Id,
-            Name: Name
+            Name: Name,
+            Date: date,
+            TeacherFK: teacherid
         }
 
         $.ajax({
@@ -59,9 +87,9 @@
             url: 'https://localhost:44380/api/Students/EditStudent',
             dataType: "json",
             data: student,
-            success: function (res) {
-                if (res.Success) {
-                    window.location.href = res.RedirectUrl;
+            success: function (response) {
+                if (response.Success) {
+                    window.location.href = response.RedirectUrl;
                 }
             }
         });

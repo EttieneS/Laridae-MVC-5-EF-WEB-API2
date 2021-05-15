@@ -8,7 +8,7 @@
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/bootstrap")
 <script type="text/javascript" src="../../packages/datetimepicker/moment.min.js"></script>
-<h2>Add Teacher</h2>
+<h2>Add Student</h2>
 
 <div class="card card-report mx-auto">
     <div class="card-body">
@@ -19,6 +19,19 @@
                     <input type="text" class="form-control" id="Name" name="Name" placeholder="Teacher Name">
                 </div>
             </div>
+            <div class="form-group-row">
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="date" name="date" placeholder="">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="teacher_id" class="col-sm col-form-label">Teacher:</label>
+                <div class="col-sm-6">
+                    <select class="browser-default custom-select" id="teacher_id" name="teacher_id">
+                        <option selected>Select Teacher Name</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group row">
                 <button class="btn btn-primary" type="button" id="addStudent" name="addStudent" onclick="createStudent()">Save</button>
             </div>
@@ -27,11 +40,33 @@
 </div>
 
 <script>
+    
+    //todo BS dropdown
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:44380/api/Teachers/TeachersList/',
+            success: function (response) {
+                $.each(response, function (key, value) {
+                    var teachernamedropdown = $('#teacher_id');
+                    var option = document.createElement("option");
+                    option.text = value['Name'];
+                    option.value = value['Id'];
+                    teachernamedropdown.append(option);
+                });
+            }
+        });
+    });
+
     function createStudent() {
         var name = $('#Name').val();
-        
-        student = {
-            Name: name
+        var date = $('#date').val();
+        var teacher_id = $('#teacher_id').val();
+
+        var student = {
+            Name: name,
+            Date: date,
+            TeacherFK: teacher_id
         }
 
         $.ajax({

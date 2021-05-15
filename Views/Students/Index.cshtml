@@ -11,6 +11,8 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Teacher</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -32,7 +34,7 @@
             "processing": true,
             "ajax": {
                 "method": "GET",
-                "url": "https://localhost:44380/api/Students/StudentsList",
+                "url": "https://localhost:44380/api/Students/GetStudentTeacher",
                 dataSrc: '',
                 "order": [[0, "asc"]]
             },
@@ -40,6 +42,10 @@
                 "data": "Id"
             }, {
                 "data": "Name"
+            }, {
+                "data": "Date"
+            }, {
+                "data": "TeacherName"
             }, {
             "data": "Id",
             "render": function (data, type, full) {

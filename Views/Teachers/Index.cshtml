@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Teachers Index";
 }
-
+<link rel="stylesheet" type="text/css" href="../../packages/DataTables/datatables.css">
 <h2>View Teachers</h2>
 <table class="table_dark" id="teachers_table">
     <thead>
@@ -60,7 +60,8 @@
             "data": "Id",
             "render": function (data, type, full) {
                 return '<a href="#" type="button" class="btn btn-primary float-left" onclick=deleteTeacher(' + full.Id + ')>Delete</a>' +
-                    '<a href="#" type="button" class="btn btn-secondary" onclick=editTeacher(' + full.Id + ')>Edit</a>';
+                    '<a href="#" type="button" class="btn btn-secondary" onclick=editTeacher(' + full.Id + ')>Edit</a>' +
+                '<a href="#" type="button" class="btn btn-secondary" onclick=viewTeacher(' + full.Id + ')>Details</a>';
             }
             }]
         });
@@ -82,6 +83,11 @@
     function editTeacher(id) {
         localStorage.setItem("teacherId", id);
         window.location = "/Teachers/Edit/"; 
+    }
+
+    function viewTeacher(id) {
+        localStorage.setItem("teacherId", id);
+        window.location = "/Teachers/Details/";
     }
 </script>
 
